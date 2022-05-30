@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { WeatherDashboardRoutingModule } from './weather-forecast-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
   ],
   imports: [
     CommonModule,
-    WeatherDashboardRoutingModule
+    WeatherDashboardRoutingModule,
+    SharedModule
   ]
 })
 export class WeatherDashboardModule { }
