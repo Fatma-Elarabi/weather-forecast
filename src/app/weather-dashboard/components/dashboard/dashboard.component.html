@@ -2,7 +2,7 @@
     <div class="dashboard__country">
         <h1>Egypt</h1>
         <p>{{todayDate | date: 'long'}}</p>
-        <a>See Cities Details</a>
+        <a [routerLink]="['city']">See Cities Details</a>
     </div>
     <div class="dashboard__card">
         <app-card></app-card>

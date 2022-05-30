@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { WeatherDashboardRoutingModule } from './weather-forecast-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
+import { CityForecastComponent } from './components/city-forecast/city-forecast.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    CityForecastComponent
   ],
   imports: [
     CommonModule,
