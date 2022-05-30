@@ -5,6 +5,8 @@ import { WeatherDashboardRoutingModule } from './weather-forecast-routing.module
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { CityForecastComponent } from './components/city-forecast/city-forecast.component';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -14,8 +16,10 @@ import { CityForecastComponent } from './components/city-forecast/city-forecast.
   ],
   imports: [
     CommonModule,
+    FormsModule,
     WeatherDashboardRoutingModule,
-    SharedModule
+    SharedModule,
+    NgSelectModule
   ]
 })
 export class WeatherDashboardModule { }
