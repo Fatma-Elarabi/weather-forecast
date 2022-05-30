@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CityForecastComponent } from './components/city-forecast/city-forecast.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 @NgModule({
@@ -19,7 +20,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     WeatherDashboardRoutingModule,
     SharedModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
   ]
 })
 export class WeatherDashboardModule { }
