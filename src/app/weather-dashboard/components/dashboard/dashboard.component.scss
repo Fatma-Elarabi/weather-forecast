@@ -1,0 +1,14 @@
+.dashboard {
+    height: 100vh;
+    padding: 10rem;
+    background-image: linear-gradient(to right, #005aff, #00ffe7);
+
+    .dashboard__country {
+        color: #fff;
+
+        a {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+}

@@ -1,8 +1,10 @@
-<div class="row">
-    <div class="col-md-6">
-        <app-drop-down></app-drop-down>
+<div class="dashboard d-flex justify-content-around align-items-center">
+    <div class="dashboard__country">
+        <h1>Egypt</h1>
+        <p>{{todayDate | date: 'long'}}</p>
+        <a>See Cities Details</a>
     </div>
-    <div class="col-md-6">
+    <div>
         <app-card></app-card>
     </div>
 </div>
