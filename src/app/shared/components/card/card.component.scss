@@ -31,3 +31,17 @@
         }
     }
 }
+
+@media (max-width: 575.98px) { 
+    .card {
+        .weather__degree {
+            i {
+                font-size: 3.5rem;
+            }
+        
+            p {
+                font-size: 2.5rem;
+            }
+        }
+    }
+ }

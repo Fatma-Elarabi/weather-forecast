@@ -1,4 +1,8 @@
 .dashboard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
     padding: 10rem;
     
     .dashboard__country {
@@ -23,5 +27,40 @@
 
     .dashboard__card {
         width: 100%;
+    }
+}
+
+@media (max-width: 575.98px) { 
+    .dashboard {
+        flex-direction: column;
+        justify-content: center;
+        padding: 3rem;
+
+        .dashboard__country {
+            margin-bottom: 40px;
+
+            a {
+                padding: 8px 15px;
+                border-radius: 12px;
+            }
+        }
+    }
+ }
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .dashboard {
+        flex-direction: column;
+        justify-content: center;
+        padding: 3rem;
+
+        .dashboard__country {
+            margin-bottom: 40px;
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .dashboard {
+        padding: 5rem;
     }
 }

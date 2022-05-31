@@ -1,4 +1,4 @@
-<div class="city__forecast d-flex justify-content-around align-items-center">
+<div class="city__forecast">
     <div class="city__search">
         <h1>Egypt Cities</h1>
         <ng-select [(ngModel)]="selectedCar" class="mb-3">
@@ -8,7 +8,7 @@
     </div>
     <div>
         <div echarts [options]="chartOption" class="weather__chart"></div>
-        <div class="week__weather d-flex justify-content-between">
+        <div class="week__weather">
             <div class="px-3 week__weather-card">
                 <p>Today</p>
                 <i class="pi pi-cloud"></i>
