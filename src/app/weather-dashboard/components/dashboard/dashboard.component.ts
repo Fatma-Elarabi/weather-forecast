@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, filter, switchMap } from 'rxjs/operators';
 import { WeatherForecastService } from '../../services/weather-forecast.service';
 
 @Component({
@@ -12,16 +10,11 @@ import { WeatherForecastService } from '../../services/weather-forecast.service'
 export class DashboardComponent implements OnInit {
 
   todayDate = new Date();
-  coor!: GeolocationPosition;
   lat!: number;
   lon!: number;
-  count!: number;
-  country: any;
-  state: any;
-  city: any;
 
-  constructor(private http: HttpClient,
-    private weatherService: WeatherForecastService) { }
+
+  constructor(private weatherService: WeatherForecastService) { }
 
   ngOnInit(): void {
     // this.getLocation()
