@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { WeatherForecastService } from '../../services/weather-forecast.service';
+import { Subject, takeUntil } from 'rxjs';
+import { IForecast } from '../../models/weather-forecast';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,9 +10,18 @@ import { WeatherForecastService } from '../../services/weather-forecast.service'
 })
 export class DashboardComponent implements OnInit {
 
+  private _destroyed$ = new Subject<void>();
   todayDate = new Date();
   lat!: number;
   lon!: number;
+  weatherDetails!: IForecast;
+  temp!: number;
+  windSpeed!: number;
+  humidity!: number;
+  weatherStatus!: string;
+  weatherIcon!: string;
+  countryCode!: string;
+  countryName!: string | undefined;
 
 
   constructor(private weatherService: WeatherForecastService) { }
@@ -27,18 +37,33 @@ export class DashboardComponent implements OnInit {
       this.lon = position['coords']['longitude'];
       console.log(this.lat, this.lon);
 
-      // this.getWeather()
+      // this.getWeather();
       // this.displayLocation(this.lat, this.long)
       // console.log(this.getCurrentLocation(this.lat, this.long));
     });
   }
 
   getWeather() {
-    this.weatherService.getWeatherForCity(this.lat, this.lon).subscribe({
-      next: weather => console.log(weather),
+    this.weatherService.getWeatherForCity(this.lat, this.lon).pipe(takeUntil(this._destroyed$)).subscribe({
+      next: weather => {
+        this.weatherDetails = weather;
+        this.temp = this.weatherDetails.main.temp;
+        this.windSpeed = this.weatherDetails.wind.speed;
+        this.humidity = this.weatherDetails.main.humidity;
+        this.weatherStatus = this.weatherDetails.weather[0].main;
+        this.weatherIcon = this.weatherDetails.weather[0].icon;
+        this.countryCode = this.weatherDetails.sys.country;
+        console.log(this.temp);
+        
+      },
       error: () => {},
-      complete: () => {}
+      complete: () => this.getCountryName()
     })
+  }
+
+  getCountryName() {
+    const regionNames = new Intl.DisplayNames(['en'], {type: 'region'});
+    this.countryName = regionNames.of(this.countryCode);
   }
 //   getLocation(){
 //     if (navigator.geolocation){
@@ -111,5 +136,10 @@ export class DashboardComponent implements OnInit {
 //         }
 //     );
 // }
+
+  ngOnDestroy() {
+    this._destroyed$.next();
+    this._destroyed$.complete();
+  }
 
 }

@@ -4,8 +4,9 @@
     @include card;
 
     .weather__degree {
-        i {
-            font-size: 5rem;
+        .weather__icon {
+            width: 7rem;
+            height: 7rem;
         }
     
         p {
@@ -35,8 +36,9 @@
 @media (max-width: 575.98px) { 
     .card {
         .weather__degree {
-            i {
-                font-size: 3.5rem;
+            .weather__icon {
+                width: 5rem;
+                height: 5rem;
             }
         
             p {
