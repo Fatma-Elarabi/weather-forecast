@@ -2,7 +2,7 @@
     <div class="dashboard__country">
         <h1>{{countryName}}</h1>
         <p>{{todayDate | date: 'long'}}</p>
-        <a [routerLink]="['city']">See Cities Details</a>
+        <a [routerLink]="[countryName]">See Cities Details</a>
     </div>
     <div class="dashboard__card">
         <app-card [temp]="temp" [windSpeed]="windSpeed" [humidity]="humidity" [weatherStatus]="weatherStatus" [weatherIcon]="weatherIcon"></app-card>
