@@ -38,7 +38,7 @@
                 <ng-template swiperSlide *ngFor="let item of cityForecast">
                     <div class="px-3 week__weather-card" (click)="dataToSendToCard(item)">
                         <p>{{item.dt_txt}}</p>
-                        <img [src]="iconUrl">
+                        <img [src]="item.weather[0].icon | convertToImg">
                         <div>Humidity</div>
                         <div>{{item.main.humidity}}%</div>
                     </div>

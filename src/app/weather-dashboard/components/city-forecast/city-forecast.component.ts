@@ -70,7 +70,6 @@ export class CityForecastComponent implements OnInit {
   humidity!: number;
   weatherStatus!: string;
   weatherIcon!: string;
-  iconUrl!: string;
   countryCode!: string;
   countryName!: string | undefined;
 
@@ -112,6 +111,5 @@ export class CityForecastComponent implements OnInit {
     this.humidity = this.currentCityWeather.main.humidity;
     this.weatherStatus = this.currentCityWeather.weather[0].main;
     this.weatherIcon = this.currentCityWeather.weather[0].icon;
-    this.iconUrl = `http://openweathermap.org/img/w/${this.weatherIcon}.png`;
   }
 }

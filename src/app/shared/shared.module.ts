@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { SharedRoutingModule } from './shared-routing.module';
 import { CardComponent } from './components/card/card.component';
+import { ConvertToImgPipe } from './pipes/convert-to-img.pipe';
 
 
 @NgModule({
   declarations: [
-    CardComponent
+    CardComponent,
+    ConvertToImgPipe
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { CardComponent } from './components/card/card.component';
     SharedRoutingModule
   ],
   exports: [
-    CardComponent
+    CardComponent,
+    ConvertToImgPipe
   ]
 })
 export class SharedModule { }
