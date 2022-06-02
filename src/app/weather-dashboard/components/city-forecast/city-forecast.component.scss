@@ -1,9 +1,8 @@
 @import './../../../../assets/mixins/mixins.scss';
+@import "~swiper/css";
+@import "~swiper/css/navigation";
 
 .city__forecast {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     height: 100vh;
     padding: 1rem;
 
@@ -11,86 +10,11 @@
         color: #fff;
     }
 
-    .weather__chart {
-        width: 70vw;
-    }
-
-    .week__weather {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 53px;
-
+    .swiper {
         .week__weather-card {
             @include card;
             padding: 20px 35px;
-        }
-    }
-}
-
-@media (max-width: 575.98px) {
-    .city__forecast {
-        flex-direction: column;
-        justify-content: center;
-        align-items: initial;
-        height: auto;
-
-        .weather__chart {
-            width: auto;
-        }
-
-        .week__weather {
-            padding: 0;
-            overflow: scroll;
-
-            .week__weather-card {
-                margin: 0 5px;
-                box-shadow: none;
-            }
-        }
-    }
-}
-
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .city__forecast {
-        flex-direction: column;
-        justify-content: center;
-        align-items: initial;
-        height: auto;
-
-        .weather__chart {
-            width: auto;
-        }
-
-        .week__weather {
-            padding: 0;
-            overflow: scroll;
-
-            .week__weather-card {
-                margin: 0 5px;
-                box-shadow: none;
-            }
-        }
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1199.98px) {
-    .city__forecast {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: auto;
-
-        .weather__chart {
-            width: auto;
-        }
-
-        .week__weather {
-            padding: 0;
-
-            .week__weather-card {
-                margin: 0 5px;
-                box-shadow: none;
-            }
+            box-shadow: none;
         }
     }
 }
