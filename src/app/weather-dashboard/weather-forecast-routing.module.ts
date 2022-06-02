@@ -9,7 +9,7 @@ const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'city',
+    path: ':country',
     component: CityForecastComponent
   }
 ];
