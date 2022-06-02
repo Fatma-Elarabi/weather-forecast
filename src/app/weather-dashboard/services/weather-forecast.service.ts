@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ICities, IForecast } from '../models/weather-forecast';
+import { ICityForecast, IList } from '../models/city-forecast'
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class WeatherForecastService {
   constructor(private http: HttpClient) { }
   
   getWeatherForCity(lat: number, lon: number,): Observable<IForecast> {
-    return this.http.get<IForecast>(`${environment.apiUrl}?lat=${lat}&lon=${lon}&appid=${environment.API_key}`);
+    return this.http.get<IForecast>(`${environment.apiUrl}weather?lat=${lat}&lon=${lon}&appid=${environment.API_key}`);
   }
 
   getCitiesByCountryCode(countryName: { country: string; }): Observable<string[]> {
@@ -20,5 +21,12 @@ export class WeatherForecastService {
     .pipe(map( cities => {
       return cities.data;
     }));
+  }
+
+  getHistoryWeatherByCityName(cityName: string): Observable<IList[]> {
+    return this.http.get<ICityForecast>(`${environment.apiUrl}forecast?q=${cityName}&appid=${environment.API_key}`)
+    .pipe(map( forecastList => {
+      return forecastList.list;
+    }))
   }
 }

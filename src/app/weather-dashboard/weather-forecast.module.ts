@@ -8,6 +8,7 @@ import { CityForecastComponent } from './components/city-forecast/city-forecast.
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { SwiperModule } from 'swiper/angular';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     WeatherDashboardRoutingModule,
     SharedModule,
     NgSelectModule,
+    SwiperModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     }),

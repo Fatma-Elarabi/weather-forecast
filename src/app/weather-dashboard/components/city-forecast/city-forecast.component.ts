@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EChartsOption } from 'echarts';
+import { IList } from '../../models/city-forecast';
 import { WeatherForecastService } from '../../services/weather-forecast.service';
+import SwiperCore, { Navigation } from "swiper";
+
+SwiperCore.use([Navigation]);
 
 @Component({
   selector: 'app-city-forecast',
   templateUrl: './city-forecast.component.html',
-  styleUrls: ['./city-forecast.component.scss']
+  styleUrls: ['./city-forecast.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CityForecastComponent implements OnInit {
 
@@ -58,6 +63,15 @@ export class CityForecastComponent implements OnInit {
   currentCountry!: string;
   cities!: string[];
   selectedCity!: string;
+  cityForecast!: IList[];
+  currentCityWeather!: IList;
+  temp!: number;
+  windSpeed!: number;
+  humidity!: number;
+  weatherStatus!: string;
+  weatherIcon!: string;
+  countryCode!: string;
+  countryName!: string | undefined;
 
   constructor(
     private weatherService: WeatherForecastService,
@@ -66,18 +80,36 @@ export class CityForecastComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.getCities();
+    // this.getCities();
   }
 
-  getCities() {
+  getCities(): void {
     const body = {
       country: this.currentCountry
     }
     this.weatherService.getCitiesByCountryCode(body).subscribe({
       next: cities => this.cities = cities,
       error: () => {},
-      complete: () => this.selectedCity = this.cities[0]
+      complete: () => {
+        this.selectedCity = this.cities[0];
+        this.getHistoricalWeather();
+      }
     })
   }
 
+  getHistoricalWeather(): void {
+    this.weatherService.getHistoryWeatherByCityName(this.selectedCity).subscribe( forecast => {
+      this.cityForecast = forecast;
+      this.dataToSendToCard(this.cityForecast[0]);
+    });
+  }
+
+  dataToSendToCard(weatherSelectedTime: IList): void {
+    this.currentCityWeather = weatherSelectedTime;
+    this.temp = this.currentCityWeather.main.temp;
+    this.windSpeed = this.currentCityWeather.wind.speed;
+    this.humidity = this.currentCityWeather.main.humidity;
+    this.weatherStatus = this.currentCityWeather.weather[0].main;
+    this.weatherIcon = this.currentCityWeather.weather[0].icon;
+  }
 }
