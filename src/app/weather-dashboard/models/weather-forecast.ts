@@ -51,3 +51,9 @@ export interface IForecast {
     name: string;
     cod: number;
 }
+
+export interface ICities {
+    error: boolean;
+    msg: string;
+    data: string[];
+}

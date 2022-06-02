@@ -1,8 +1,8 @@
 <div class="city__forecast">
     <div class="city__search">
-        <h1>Egypt Cities</h1>
-        <ng-select [(ngModel)]="selectedCar" class="mb-3">
-            <ng-option *ngFor="let car of cars" [value]="car.id">{{car.name}}</ng-option>
+        <h1>{{currentCountry}} Cities</h1>
+        <ng-select [(ngModel)]="selectedCity" class="mb-3">
+            <ng-option *ngFor="let city of cities" [value]="city">{{city}}</ng-option>
         </ng-select>
         <app-card></app-card>
     </div>
