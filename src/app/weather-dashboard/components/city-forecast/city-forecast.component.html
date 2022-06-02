@@ -1,10 +1,10 @@
 <div class="city__forecast">
     <div class="city__search">
         <h1>{{currentCountry}} Cities</h1>
-        <ng-select [(ngModel)]="selectedCity" class="mb-3">
+        <ng-select [(ngModel)]="selectedCity" (ngModelChange)="getHistoricalWeather()" class="mb-3">
             <ng-option *ngFor="let city of cities" [value]="city">{{city}}</ng-option>
         </ng-select>
-        <app-card></app-card>
+        <app-card [temp]="temp" [windSpeed]="windSpeed" [humidity]="humidity" [weatherStatus]="weatherStatus" [weatherIcon]="weatherIcon"></app-card>
     </div>
     <div>
         <div echarts [options]="chartOption" class="weather__chart"></div>
