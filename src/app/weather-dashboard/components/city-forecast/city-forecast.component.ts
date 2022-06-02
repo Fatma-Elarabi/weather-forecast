@@ -101,13 +101,17 @@ export class CityForecastComponent implements OnInit {
   getHistoricalWeather(): void {
     this.weatherService.getHistoryWeatherByCityName(this.selectedCity).subscribe( forecast => {
       this.cityForecast = forecast;
-      this.currentCityWeather = forecast[0];
-      this.temp = this.currentCityWeather.main.temp;
-      this.windSpeed = this.currentCityWeather.wind.speed;
-      this.humidity = this.currentCityWeather.main.humidity;
-      this.weatherStatus = this.currentCityWeather.weather[0].main;
-      this.weatherIcon = this.currentCityWeather.weather[0].icon;
-      this.iconUrl = `http://openweathermap.org/img/w/${this.weatherIcon}.png`;
+      this.dataToSendToCard(this.cityForecast[0]);
     });
+  }
+
+  dataToSendToCard(weatherSelectedTime: IList): void {
+    this.currentCityWeather = weatherSelectedTime;
+    this.temp = this.currentCityWeather.main.temp;
+    this.windSpeed = this.currentCityWeather.wind.speed;
+    this.humidity = this.currentCityWeather.main.humidity;
+    this.weatherStatus = this.currentCityWeather.weather[0].main;
+    this.weatherIcon = this.currentCityWeather.weather[0].icon;
+    this.iconUrl = `http://openweathermap.org/img/w/${this.weatherIcon}.png`;
   }
 }

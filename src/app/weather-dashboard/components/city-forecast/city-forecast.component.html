@@ -36,7 +36,7 @@
             [navigation]="true"
             class="mySwiper">
                 <ng-template swiperSlide *ngFor="let item of cityForecast">
-                    <div class="px-3 week__weather-card">
+                    <div class="px-3 week__weather-card" (click)="dataToSendToCard(item)">
                         <p>{{item.dt_txt}}</p>
                         <img [src]="iconUrl">
                         <div>Humidity</div>
