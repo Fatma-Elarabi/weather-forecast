@@ -15,51 +15,7 @@ SwiperCore.use([Navigation]);
 })
 export class CityForecastComponent implements OnInit {
 
-  chartOption: EChartsOption = {
-    tooltip: {
-      show: true
-    },
-    xAxis: {
-      type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      axisLine: {
-        lineStyle: {
-          color: "#ffff11"
-        }
-      },
-      axisTick: {
-        show: false
-      },
-      axisLabel: {
-        fontWeight: "bolder"
-      }
-    },
-    yAxis: {
-      type: 'value',
-      axisLine: {
-        show: false,
-        lineStyle: {
-          color: "#ffff11"
-        }
-      },
-      axisTick: {
-        show: false,
-      }
-    },
-    series: [
-      {
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line',
-        itemStyle: {
-          color: "#fff"
-        },
-        areaStyle: {
-          color: "#fff",
-          opacity: 0.5
-        }
-      },
-    ],
-  };
+  chartOption!: EChartsOption;
   currentCountry!: string;
   cities!: string[];
   selectedCity!: string;
@@ -72,6 +28,8 @@ export class CityForecastComponent implements OnInit {
   weatherIcon!: string;
   countryCode!: string;
   countryName!: string | undefined;
+  xAxis: string[] = [];
+  yAxis: number[] = [];
 
   constructor(
     private weatherService: WeatherForecastService,
@@ -98,9 +56,13 @@ export class CityForecastComponent implements OnInit {
   }
 
   getHistoricalWeather(): void {
-    this.weatherService.getHistoryWeatherByCityName(this.selectedCity).subscribe( forecast => {
-      this.cityForecast = forecast;
-      this.dataToSendToCard(this.cityForecast[0]);
+    this.weatherService.getHistoryWeatherByCityName(this.selectedCity).subscribe({
+      next: forecast => {
+          this.cityForecast = forecast;
+          this.dataToSendToCard(this.cityForecast[0]);
+      },
+      error: () => {},
+      complete: () => this.initChart()
     });
   }
 
@@ -111,5 +73,64 @@ export class CityForecastComponent implements OnInit {
     this.humidity = this.currentCityWeather.main.humidity;
     this.weatherStatus = this.currentCityWeather.weather[0].main;
     this.weatherIcon = this.currentCityWeather.weather[0].icon;
+  }
+
+  initAxis(): void {
+    this.cityForecast.filter( axis => {
+      this.xAxis.push(axis.dt_txt);
+      this.yAxis.push(axis.main.temp);
+    });
+  }
+
+  initChart(): void {
+    this.initAxis();
+    this.chartOption = {
+      tooltip: {
+        show: true
+      },
+      xAxis: {
+        type: 'category',
+        data: this.xAxis,
+        axisLine: {
+          lineStyle: {
+            color: "#ffff11"
+          }
+        },
+        axisTick: {
+          show: false
+        },
+        axisLabel: {
+          fontWeight: "bolder"
+        }
+      },
+      yAxis: {
+        type: 'value',
+        axisLine: {
+          show: false,
+          lineStyle: {
+            color: "#ffff11"
+          }
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          formatter: '{value} °C'
+        }
+      },
+      series: [
+        {
+          data: this.yAxis,
+          type: 'line',
+          itemStyle: {
+            color: "#fff"
+          },
+          areaStyle: {
+            color: "#fff",
+            opacity: 0.5
+          }
+        },
+      ],
+    };
   }
 }
