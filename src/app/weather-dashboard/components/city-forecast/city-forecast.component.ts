@@ -78,7 +78,7 @@ export class CityForecastComponent implements OnInit {
   initAxis(): void {
     this.cityForecast.filter( axis => {
       this.xAxis.push(axis.dt_txt);
-      this.yAxis.push(axis.main.temp);
+      this.yAxis.push(axis.main.temp-273.15);
     });
   }
 

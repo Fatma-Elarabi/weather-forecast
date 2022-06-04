@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { SharedRoutingModule } from './shared-routing.module';
 import { CardComponent } from './components/card/card.component';
 import { ConvertToImgPipe } from './pipes/convert-to-img.pipe';
+import { WeatherPipe } from './pipes/weather.pipe';
 
 
 @NgModule({
   declarations: [
     CardComponent,
-    ConvertToImgPipe
+    ConvertToImgPipe,
+    WeatherPipe
   ],
   imports: [
     CommonModule,
