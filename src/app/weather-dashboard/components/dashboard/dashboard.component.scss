@@ -1,3 +1,5 @@
+@import '../../../../assets/mixins/mixins.scss';
+
 .dashboard {
     display: flex;
     justify-content: space-around;
@@ -10,18 +12,7 @@
         color: #fff;
 
         a {
-            padding: 10px 25px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            text-align: center;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: 500;
-            color: #fff;
-            background: transparent;
-            &:hover {
-                box-shadow: 0 4px 30px rgb(110 106 106 / 10%);
-            }  
+            @include button 
         }
     }
 

@@ -1,7 +1,7 @@
 <div class="card">
     <div class="weather__degree d-flex justify-content-center">
         <img class="weather__icon" [src]="weatherIcon | convertToImg">
-        <p>{{temp}}<sup class="degree">K</sup></p>
+        <p>{{temp | weather}}<sup class="degree">C</sup></p>
     </div>
     <div class="weather__status text-center">{{weatherStatus}}</div>
     <div class="weather__table d-flex justify-content-center">

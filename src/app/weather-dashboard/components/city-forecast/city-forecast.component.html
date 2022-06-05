@@ -1,18 +1,23 @@
 <div class="city__forecast">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="city__search">
-                <h1>{{currentCountry}} Cities</h1>
-                <ng-select [(ngModel)]="selectedCity" (ngModelChange)="getHistoricalWeather()" class="mb-3">
-                    <ng-option *ngFor="let city of cities" [value]="city">{{city}}</ng-option>
-                </ng-select>
-                <app-card [temp]="temp" [windSpeed]="windSpeed" [humidity]="humidity" [weatherStatus]="weatherStatus" [weatherIcon]="weatherIcon"></app-card>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div echarts [options]="chartOption" class="weather__chart"></div>
-            <swiper
-            [breakpoints]="{
+  <div class="row">
+    <div class="col-md-4">
+      <div class="city__search">
+        <h1>{{currentCountry}} Cities</h1>
+        <ng-select [(ngModel)]="selectedCity" (ngModelChange)="getHistoricalWeather()" class="mb-3">
+          <ng-option *ngFor="let city of cities" [value]="city">{{city}}</ng-option>
+        </ng-select>
+        <app-card [temp]="temp" [windSpeed]="windSpeed" [humidity]="humidity" [weatherStatus]="weatherStatus"
+          [weatherIcon]="weatherIcon"></app-card>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="text-center">
+        <a class="toggle-btn" (click)="toggleChart('line')">Line Chart</a>
+        <a class="toggle-btn m-2" (click)="toggleChart('bar')">Bar Chart</a>
+      </div>
+      <app-bar-chart *ngIf="!isLineChart"></app-bar-chart>
+      <div *ngIf="isLineChart" echarts [options]="chartOption" class="weather__chart"></div>
+      <swiper [breakpoints]="{
                 '@0.00': {
                   slidesPerView: 1,
                   spaceBetween: 10
@@ -29,21 +34,17 @@
                   slidesPerView: 5,
                   spaceBetween: 30
                 }
-              }"
-            [slidesPerGroup]="5"
-            [loop]="false"
-            [loopFillGroupWithBlank]="true"
-            [navigation]="true"
-            class="mySwiper">
-                <ng-template swiperSlide *ngFor="let item of cityForecast">
-                    <div class="px-3 week__weather-card" (click)="dataToSendToCard(item)">
-                        <p>{{item.dt_txt}}</p>
-                        <img [src]="item.weather[0].icon | convertToImg">
-                        <div>Humidity</div>
-                        <div>{{item.main.humidity}}%</div>
-                    </div>
-                </ng-template> 
-            </swiper>
-        </div>
+              }" [slidesPerGroup]="5" [loop]="false" [loopFillGroupWithBlank]="true" [navigation]="true"
+        class="mySwiper">
+        <ng-template swiperSlide *ngFor="let item of cityForecast">
+          <div class="px-3 week__weather-card" (click)="dataToSendToCard(item)">
+            <p>{{item.dt_txt}}</p>
+            <img [src]="item.weather[0].icon | convertToImg">
+            <div>Humidity</div>
+            <div>{{item.main.humidity}}%</div>
+          </div>
+        </ng-template>
+      </swiper>
     </div>
+  </div>
 </div>
