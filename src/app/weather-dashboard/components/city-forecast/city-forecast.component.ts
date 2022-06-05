@@ -4,6 +4,8 @@ import { EChartsOption } from 'echarts';
 import { IList } from '../../models/city-forecast';
 import { WeatherForecastService } from '../../services/weather-forecast.service';
 import SwiperCore, { Navigation } from "swiper";
+import { temperature } from 'src/app/shared/models/chart-data';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 SwiperCore.use([Navigation]);
 
@@ -30,9 +32,12 @@ export class CityForecastComponent implements OnInit {
   countryName!: string | undefined;
   xAxis: string[] = [];
   yAxis: number[] = [];
+  barChartData!: temperature[];
+  isLineChart = true;
 
   constructor(
     private weatherService: WeatherForecastService,
+    private sharedService: SharedService,
     private route: ActivatedRoute) {
       this.currentCountry = this.route.snapshot.params['country'];
     }
@@ -62,7 +67,10 @@ export class CityForecastComponent implements OnInit {
           this.dataToSendToCard(this.cityForecast[0]);
       },
       error: () => {},
-      complete: () => this.initChart()
+      complete: () => {
+        this.initChart();
+        this.dataToSendToBarChart();
+      }
     });
   }
 
@@ -132,5 +140,27 @@ export class CityForecastComponent implements OnInit {
         },
       ],
     };
+  }
+
+  dataToSendToBarChart(): void {
+    this.barChartData = [];
+    this.cityForecast.slice(0,8).filter( data => {
+      this.barChartData.push(
+        {
+          date: data.dt_txt,
+          temp: Number((data.main.temp-273.15).toFixed())
+        }
+      )
+    })
+    this.sharedService.barChartData.next(this.barChartData);
+  }
+
+  toggleChart(chart: string): void {
+    if(chart === 'line') {
+      this.isLineChart = true;
+    } else if(chart === 'bar') {
+      this.isLineChart = false;
+      this.dataToSendToBarChart();
+    }
   }
 }

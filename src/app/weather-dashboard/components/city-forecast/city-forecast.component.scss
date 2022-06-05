@@ -18,4 +18,8 @@
             cursor: pointer;
         }
     }
+
+    .toggle-btn {
+      @include button;
+    }
 }
