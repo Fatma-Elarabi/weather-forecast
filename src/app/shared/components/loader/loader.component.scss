@@ -1,0 +1,39 @@
+.loading-spinner{    
+    background-image: linear-gradient(to right, #005aff, #00ffe7);
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+}
+
+.loading-message{
+    text-align: center;
+    align-self: start;
+    color: #fff;
+}
+
+.loader {
+    align-self: end;
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid #fff;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
