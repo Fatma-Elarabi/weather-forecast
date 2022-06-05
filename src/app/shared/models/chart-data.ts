@@ -1,4 +1,4 @@
 export interface temperature {
-    date: string;
-    temp: number;
-  }
+  date: string;
+  temp: number;
+}

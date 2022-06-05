@@ -1,19 +1,19 @@
 <div class="card">
-    <div class="weather__degree d-flex justify-content-center">
-        <img class="weather__icon" [src]="weatherIcon | convertToImg">
-        <p>{{temp | weather}}<sup class="degree">C</sup></p>
-    </div>
-    <div class="weather__status text-center">{{weatherStatus}}</div>
-    <div class="weather__table d-flex justify-content-center">
-        <table>
-            <tr>
-              <th>Humidity</th>
-              <th>Wind speed</th>
-            </tr>
-            <tr>
-              <td class="text-center">{{humidity}}%</td>
-              <td class="text-center">{{windSpeed}} km/j</td>
-            </tr>
-          </table>
-    </div>
+  <div class="weather__degree d-flex justify-content-center">
+    <img class="weather__icon" [src]="weatherIcon | convertToImg">
+    <p>{{temp | weather}}<sup class="degree">C</sup></p>
+  </div>
+  <div class="weather__status text-center">{{weatherStatus}}</div>
+  <div class="weather__table d-flex justify-content-center">
+    <table>
+      <tr>
+        <th>Humidity</th>
+        <th>Wind speed</th>
+      </tr>
+      <tr>
+        <td class="text-center">{{humidity}}%</td>
+        <td class="text-center">{{windSpeed}} km/h</td>
+      </tr>
+    </table>
+  </div>
 </div>

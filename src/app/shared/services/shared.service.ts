@@ -8,6 +8,7 @@ import { temperature } from '../models/chart-data';
 export class SharedService {
 
   barChartData = new BehaviorSubject<temperature[]>([]);
+  isLoading = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 }
