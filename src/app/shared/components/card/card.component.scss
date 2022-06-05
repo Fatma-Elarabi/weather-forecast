@@ -8,9 +8,10 @@
             width: 7rem;
             height: 7rem;
         }
-    
+
         p {
             font-size: 4rem;
+
             .degree {
                 &:before {
                     content: "\00b0"
@@ -18,12 +19,12 @@
             }
         }
     }
-    
+
     .weather__status {
         font-size: 1.5rem;
         font-weight: 600;
     }
-    
+
     .weather__table {
         th {
             padding: 5px;
@@ -33,20 +34,20 @@
     }
 }
 
-@media (max-width: 575.98px) { 
+@media (max-width: 575.98px) {
     .card {
         .weather__degree {
             .weather__icon {
                 width: 5rem;
                 height: 5rem;
             }
-        
+
             p {
                 font-size: 2.5rem;
             }
         }
     }
- }
+}
 
 @media (min-width: 768px) and (max-width: 1199.98px) {
     .card {

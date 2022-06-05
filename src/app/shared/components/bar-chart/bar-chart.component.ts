@@ -1,7 +1,8 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { temperature } from '../../models/chart-data';
 import * as d3 from 'd3';
 import { SharedService } from '../../services/shared.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-bar-chart',
@@ -9,17 +10,18 @@ import { SharedService } from '../../services/shared.service';
   styleUrls: ['./bar-chart.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BarChartComponent implements OnInit {
+export class BarChartComponent implements OnInit, OnDestroy {
 
-  @ViewChild('barChart', {static: true}) chartContainer!: ElementRef;
+  private _destroyed$ = new Subject<void>();
+  @ViewChild('barChart', { static: true }) chartContainer!: ElementRef;
+
   data!: temperature[];
-
   margin = { top: 20, right: 20, bottom: 30, left: 40 };
 
   constructor(private sharedService: SharedService) { }
 
-  ngOnInit(): void { 
-    this.sharedService.barChartData.subscribe( data => {
+  ngOnInit(): void {
+    this.sharedService.barChartData.pipe(takeUntil(this._destroyed$)).subscribe(data => {
       this.data = data;
       this.createChart();
     })
@@ -77,8 +79,9 @@ export class BarChartComponent implements OnInit {
       .attr('height', d => contentHeight - y(d.temp));
   }
 
-  onResize() {
-    this.createChart();
+  ngOnDestroy(): void {
+    this._destroyed$.next();
+    this._destroyed$.complete();
   }
 
 }

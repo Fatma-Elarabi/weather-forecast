@@ -6,13 +6,13 @@
     align-items: center;
     height: 100vh;
     padding: 10rem;
-    
+
     .dashboard__country {
         width: 100%;
         color: #fff;
 
         a {
-            @include button 
+            @include button
         }
     }
 
@@ -21,7 +21,7 @@
     }
 }
 
-@media (max-width: 575.98px) { 
+@media (max-width: 575.98px) {
     .dashboard {
         flex-direction: column;
         justify-content: center;
@@ -36,9 +36,9 @@
             }
         }
     }
- }
+}
 
-@media (min-width: 576px) and (max-width: 767.98px) { 
+@media (min-width: 576px) and (max-width: 767.98px) {
     .dashboard {
         flex-direction: column;
         justify-content: center;

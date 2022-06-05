@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EChartsOption } from 'echarts';
 import { IList } from '../../models/city-forecast';
@@ -6,6 +6,7 @@ import { WeatherForecastService } from '../../services/weather-forecast.service'
 import SwiperCore, { Navigation } from "swiper";
 import { temperature } from 'src/app/shared/models/chart-data';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { Subject, takeUntil } from 'rxjs';
 
 SwiperCore.use([Navigation]);
 
@@ -15,7 +16,9 @@ SwiperCore.use([Navigation]);
   styleUrls: ['./city-forecast.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CityForecastComponent implements OnInit {
+export class CityForecastComponent implements OnInit, OnDestroy {
+
+  private _destroyed$ = new Subject<void>();
 
   chartOption!: EChartsOption;
   currentCountry!: string;
@@ -29,7 +32,7 @@ export class CityForecastComponent implements OnInit {
   weatherStatus!: string;
   weatherIcon!: string;
   countryCode!: string;
-  countryName!: string | undefined;
+  countryName!: string;
   xAxis: string[] = [];
   yAxis: number[] = [];
   barChartData!: temperature[];
@@ -39,20 +42,20 @@ export class CityForecastComponent implements OnInit {
     private weatherService: WeatherForecastService,
     private sharedService: SharedService,
     private route: ActivatedRoute) {
-      this.currentCountry = this.route.snapshot.params['country'];
-    }
+    this.currentCountry = this.route.snapshot.params['country'];
+  }
 
   ngOnInit(): void {
-    // this.getCities();
+    this.getCities();
   }
 
   getCities(): void {
     const body = {
       country: this.currentCountry
     }
-    this.weatherService.getCitiesByCountryCode(body).subscribe({
+    this.weatherService.getCitiesByCountryCode(body).pipe(takeUntil(this._destroyed$)).subscribe({
       next: cities => this.cities = cities,
-      error: () => {},
+      error: () => { },
       complete: () => {
         this.selectedCity = this.cities[0];
         this.getHistoricalWeather();
@@ -61,12 +64,12 @@ export class CityForecastComponent implements OnInit {
   }
 
   getHistoricalWeather(): void {
-    this.weatherService.getHistoryWeatherByCityName(this.selectedCity).subscribe({
+    this.weatherService.getHistoryWeatherByCityName(this.selectedCity).pipe(takeUntil(this._destroyed$)).subscribe({
       next: forecast => {
-          this.cityForecast = forecast;
-          this.dataToSendToCard(this.cityForecast[0]);
+        this.cityForecast = forecast;
+        this.dataToSendToCard(this.cityForecast[0]);
       },
-      error: () => {},
+      error: () => { },
       complete: () => {
         this.initChart();
         this.dataToSendToBarChart();
@@ -84,9 +87,9 @@ export class CityForecastComponent implements OnInit {
   }
 
   initAxis(): void {
-    this.cityForecast.filter( axis => {
+    this.cityForecast.slice(0,7).filter(axis => {
       this.xAxis.push(axis.dt_txt);
-      this.yAxis.push(axis.main.temp-273.15);
+      this.yAxis.push(axis.main.temp - 273.15);
     });
   }
 
@@ -144,11 +147,11 @@ export class CityForecastComponent implements OnInit {
 
   dataToSendToBarChart(): void {
     this.barChartData = [];
-    this.cityForecast.slice(0,8).filter( data => {
+    this.cityForecast.slice(0, 7).filter(data => {
       this.barChartData.push(
         {
           date: data.dt_txt,
-          temp: Number((data.main.temp-273.15).toFixed())
+          temp: Number((data.main.temp - 273.15).toFixed())
         }
       )
     })
@@ -156,11 +159,16 @@ export class CityForecastComponent implements OnInit {
   }
 
   toggleChart(chart: string): void {
-    if(chart === 'line') {
+    if (chart === 'line') {
       this.isLineChart = true;
-    } else if(chart === 'bar') {
+    } else if (chart === 'bar') {
       this.isLineChart = false;
       this.dataToSendToBarChart();
     }
+  }
+
+  ngOnDestroy() {
+    this._destroyed$.next();
+    this._destroyed$.complete();
   }
 }
