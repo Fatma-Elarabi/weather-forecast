@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ConvertToImgPipe } from '../../pipes/convert-to-img.pipe';
+import { WeatherPipe } from '../../pipes/weather.pipe';
 
 import { CardComponent } from './card.component';
 
@@ -8,7 +10,11 @@ describe('CardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CardComponent ]
+      declarations: [
+        CardComponent,
+        ConvertToImgPipe,
+        WeatherPipe
+      ],
     })
     .compileComponents();
   });

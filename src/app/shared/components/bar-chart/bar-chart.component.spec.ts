@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ConvertToImgPipe } from '../../pipes/convert-to-img.pipe';
 
 import { BarChartComponent } from './bar-chart.component';
 
@@ -8,7 +9,10 @@ describe('BarChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BarChartComponent ]
+      declarations: [
+        BarChartComponent,
+        ConvertToImgPipe
+      ],
     })
     .compileComponents();
   });
